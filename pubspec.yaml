@@ -55,6 +55,9 @@ dependencies:
   cached_network_image: ^3.3.1
   shimmer: ^3.0.0
 
+  # Lucky Draw/Spin Wheel
+  wheel_picker: ^1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
