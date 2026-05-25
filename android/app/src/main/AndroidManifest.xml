@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.family_finance_zakat">
 
     <!-- Permissions -->
@@ -12,7 +13,8 @@
     <application
         android:label="Family Finance"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="false">
+        android:usesCleartextTraffic="false"
+        tools:targetApi="s">
 
         <!-- Main Flutter Activity with v2 embedding -->
         <activity

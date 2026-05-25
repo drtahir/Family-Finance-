@@ -16,11 +16,7 @@ try {
     load "${flutterRoot}/packages/flutter_tools/gradle/flutter.gradle"
     flutterAutoloaded = true
 } catch (Exception e) {
-    warn("Flutter Gradle plugin not found, applying it manually from $flutterRoot")
-}
-
-if (!flutterAutoloaded) {
-    throw new GradleException("Flutter Gradle plugin could not be loaded")
+    throw new GradleException("Flutter Gradle plugin not found, cannot load from $flutterRoot")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -42,12 +38,12 @@ android {
     compileSdkVersion 34
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 
     sourceSets {
@@ -76,4 +72,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
