@@ -12,12 +12,9 @@ if (flutterSdkPath == null) {
     throw new GradleException('Flutter SDK not found. Define location with flutter.sdk in the local.properties file.')
 }
 
-def flutterRoot = file(flutterSdkPath).absoluteFile.getParentFile().getAbsolutePath()
+def flutterRoot = file(flutterSdkPath).absoluteFile.getAbsolutePath()
 
-subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-
-subprojects {
-    project.evaluationDependsOn(':app')
+pluginManagement {
+    def flutterSdkPath = settingsDir.getParent() + "/flutter"
+    settings.ext.flutterSdkPath = flutterSdkPath
 }
