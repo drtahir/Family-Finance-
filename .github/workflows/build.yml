@@ -30,42 +30,32 @@ jobs:
 
       - name: Fix pubspec.yaml fonts section
         run: |
-          cd Family-Finance
           python3 << 'EOF'
           import re
           with open('pubspec.yaml', 'r') as f:
               content = f.read()
-          # Remove entire fonts block
-          content = re.sub(r'\s+fonts:.*?(?=\n\S|\Z)', '', content, flags=re.DOTALL)
+          content = re.sub(r'\s+fonts:[\s\S]*?(?=\n\w|\Z)', '', content)
           with open('pubspec.yaml', 'w') as f:
               f.write(content)
-          print("pubspec.yaml fixed:")
+          print("Done. pubspec.yaml content:")
           print(content)
           EOF
 
       - name: Create asset folders
-        run: |
-          cd Family-Finance
-          mkdir -p assets/images assets/icons assets/fonts
+        run: mkdir -p assets/images assets/icons assets/fonts
 
       - name: Flutter pub get
-        run: |
-          cd Family-Finance
-          flutter pub get
+        run: flutter pub get
 
       - name: Generate Drift database code
-        run: |
-          cd Family-Finance
-          dart run build_runner build --delete-conflicting-outputs
+        run: dart run build_runner build --delete-conflicting-outputs
 
       - name: Build Debug APK
-        run: |
-          cd Family-Finance
-          flutter build apk --debug
+        run: flutter build apk --debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Family-Finance-APK
-          path: Family-Finance/build/app/outputs/flutter-apk/app-debug.apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 7
