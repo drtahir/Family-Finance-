@@ -1,0 +1,34 @@
+include ':app'
+
+def localPropertiesFile = new File(rootDir, 'local.properties')
+def properties = new Properties()
+
+if (localPropertiesFile.exists()) {
+    properties.load(localPropertiesFile.newDataInputStream())
+}
+
+def flutterSdkPath = properties.getProperty('flutter.sdk')
+if (flutterSdkPath == null) {
+    throw new GradleException('Flutter SDK not found. Define location with flutter.sdk in the local.properties file.')
+}
+
+def flutterRoot = file(flutterSdkPath).absoluteFile.getParentFile().getAbsolutePath()
+
+def flutterAutoloaded = false
+try {
+    load "${flutterRoot}/packages/flutter_tools/gradle/flutter.gradle"
+    flutterAutoloaded = true
+} catch (Exception e) {
+    warn("Flutter Gradle plugin not found, plugin not applied to the root project")
+}
+
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
